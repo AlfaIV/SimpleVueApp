@@ -8,20 +8,18 @@ export enum NewsTypes {
 
 export type TNewsRequest = {
   id: number,
-  deleted: boolean,
+  deleted?: boolean,
   type: NewsTypes,
-  by: string,
-  time: string,
-  text: string,
-  dead: boolean,
-  parent: number,
-  poll: number,
-  kids: number[],
-  score: number,
-  url: string,
-  title: string,
-  parts: number[],
-  descendants: number,
+  by?: string,
+  time?: number,
+  text?: string,
+  dead?: boolean,
+  parent?: number,
+  poll?: number,
+  kids?: number[],
+  score?: number,
+  url?: string,
+  title?: string,
+  parts?: number[],
+  descendants?: number,
 };
-
-export const getNewsListApiURL = '/topstories.json'

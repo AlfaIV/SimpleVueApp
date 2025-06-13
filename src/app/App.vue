@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import NewsCard from 'widgets/newsCard/NewsCard.vue'
 import NewsList from 'features/newsList/ui/NewsList.vue';
 </script>
 
@@ -8,7 +7,11 @@ import NewsList from 'features/newsList/ui/NewsList.vue';
     <el-container>
       <el-header>Header</el-header>
       <el-main>
-        <NewsList/>
+        <el-row :gutter="20">
+          <el-col :span="4"></el-col>
+          <el-col :span="16"><NewsList/></el-col>
+          <el-col :span="4"></el-col>
+        </el-row>
       </el-main>
       <el-footer>Footer</el-footer>
     </el-container>

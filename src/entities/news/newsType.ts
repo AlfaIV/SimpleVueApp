@@ -4,5 +4,7 @@ export type TNews = {
   author: string,
   date: string,
   numberComments: number,
-  comments: string[],
+  comments: number[],
+  rating: number,
+  id: number,
 }
