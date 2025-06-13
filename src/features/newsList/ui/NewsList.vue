@@ -17,6 +17,7 @@ onMounted(() => {
       v-for="newsItem in newsListStore.newsList"
       :key="newsItem.url"
 
+      :id="newsItem.id"
       :header="newsItem.header || 'Заголовок новости'"
       :rating="newsItem.rating || 0"                  
       :author="'Автор: ' + (newsItem.author || '')"   
