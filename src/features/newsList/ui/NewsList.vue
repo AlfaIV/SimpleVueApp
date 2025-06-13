@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted } from 'vue';
+import { onMounted } from 'vue';
 import NewsCard from 'widgets/newsCard/NewsCard.vue'
 import { NewsListStore } from '../model/newsListStore';
 
