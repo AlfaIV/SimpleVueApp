@@ -18,6 +18,11 @@
     "paths": {
       "~/*": ["./src/*"],
       "components/*": ["./src/components/*"],
+      "app/*": ["./src/app/*"],
+      "pages/*": ["./src/pages/*"],
+      "widgets/*": ["./src/widgets/*"],
+      "features/*": ["./src/features/*"],
+      
     },
     "types": [
       "element-plus/global",
