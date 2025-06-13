@@ -1,7 +1,6 @@
 {
   "extends": "@vue/tsconfig/tsconfig.dom.json",
   "compilerOptions": {
-    "erasableSyntaxOnly": true, 
     "allowJs": false, 
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
@@ -14,15 +13,16 @@
     "lib": ["ES2023"],
     "strict": true,
     "moduleResolution": "bundler",
-    "baseUrl": "/",
+    "baseUrl": ".",
     "paths": {
-      "~/*": ["./src/*"],
+      "~/*": ["src/*"],
       "components/*": ["./src/components/*"],
       "app/*": ["./src/app/*"],
       "pages/*": ["./src/pages/*"],
       "widgets/*": ["./src/widgets/*"],
       "features/*": ["./src/features/*"],
-      
+      "shared/*": ["./src/shared/*"],
+      "entities/*": ["./src/entities/*"],
     },
     "types": [
       "element-plus/global",

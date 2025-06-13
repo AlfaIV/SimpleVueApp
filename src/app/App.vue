@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import HelloWorld from '~/components/HelloWorld.vue'
 import NewsCard from 'widgets/newsCard/NewsCard.vue'
+import NewsList from 'features/newsList/ui/NewsList.vue';
 </script>
 
 <template>
-  <div>
-    <HelloWorld msg="Vite + Vue" />
-    <newsCard 
-      header="Супер ИТ новость"
-      :rating=18
-      author="автор: Белый хакер"
-      date="18 мая"
-    />
+  <div class="common-layout">
+    <el-container>
+      <el-header>Header</el-header>
+      <el-main>
+        <NewsList/>
+      </el-main>
+      <el-footer>Footer</el-footer>
+    </el-container>
   </div>
 </template>
