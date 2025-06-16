@@ -1,13 +1,25 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { onMounted, onUnmounted } from 'vue';
+
 import NewsCard from 'widgets/newsCard/NewsCard.vue'
+
 import { NewsListStore } from '../model/newsListStore';
+import { timerInMs } from '~/shared/constants/commonConstants';
 
 const newsListStore = NewsListStore();
+let intervalId: NodeJS.Timeout;
 
 onMounted(() => {
-  newsListStore.getNewsList();
+  if (newsListStore.newsList.length === 0){
+    newsListStore.getNewsList();
+  }
+  intervalId = setInterval(() => newsListStore.getNewsList(), timerInMs);
 });
+
+onUnmounted(() => {
+  clearInterval(intervalId);
+})
+
 </script>
 
 

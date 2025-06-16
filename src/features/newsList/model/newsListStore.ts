@@ -1,10 +1,9 @@
 import { defineStore } from "pinia"
 import { network } from "shared/api/network";
 import { itemPerPage } from "shared/constants/commonConstants";
-import { getNewsItem, getNewsListApiURL } from "shared/api/apiConstants";
-import { options } from "shared/configs/dataTimeConfig";
+import { getNewsListApiURL } from "shared/api/apiConstants";
 import type { TNews } from "entities/news/newsType";
-import { type TNewsRequest } from "../api/getNewsListApi";
+import { fetchNewsItem } from "shared/api/fetchNewsItem";
 
 
 export const NewsListStore = defineStore('newsList', {
@@ -30,15 +29,15 @@ export const NewsListStore = defineStore('newsList', {
       }
     },
 
-    async fetchNewsItem(index: number){
+    async fetchNewsItem(index: number):Promise<TNews | undefined>{
       this.isLoading = true;
       try {
-        const response = (await network.get<TNewsRequest>(`${getNewsItem}/${index}.json`)).data;
-        this.newsList.push({
+        const response = await fetchNewsItem(index);
+        return({
             header: response.title ?? '',
             url: response.url ?? '',
             author: response.by ?? '',
-            date: new Date((response.time ?? 0)*1000).toLocaleString('ru-RU', options),
+            date: new Date((response.time ?? 0)*1000).toLocaleString('ru-RU', {dateStyle: "medium"}),
             numberComments: response.kids?.length ?? 0,
             comments: response.kids ?? [],
             rating: response.score ?? 0,
@@ -52,12 +51,12 @@ export const NewsListStore = defineStore('newsList', {
       }
     },
 
-    async getNewsList(){
+    async getNewsList(): Promise<void>{
       this.fetchLatestNews();
       for (let index = 0; index < this.page * itemPerPage; index++) {
-        await this.fetchNewsItem(index);
+        const news = await this.fetchNewsItem(index);
+        !!news && this.newsList.push(news);
       }
-      console.log(this.newsList);
     },
   },
 })
