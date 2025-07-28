@@ -1,9 +1,14 @@
-import vue from '@vitejs/plugin-vue'
 import { defineConfig } from 'vite'
+import path from 'path';
+import dotenv from 'dotenv';
+
+import vue from '@vitejs/plugin-vue'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import Components from 'unplugin-vue-components/vite'
 import AutoImport from 'unplugin-auto-import/vite'
-import path from 'path';
+
+dotenv.config();
+const apiUrl = process.env.VITE_API_URL;
 
 
 export default defineConfig({
@@ -13,9 +18,10 @@ export default defineConfig({
     host: '0.0.0.0',
     port: 8080,
     proxy: {
-        '/api': {target:"http://83.166.235.140:8080/",
+        '/api': {target: apiUrl || "https://hacker-news.firebaseio.com/v0",
         ws:true,
-        changeOrigin: true
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
       },
       
     }
@@ -23,7 +29,13 @@ export default defineConfig({
   resolve: {
     alias: {
       '~': path.resolve(__dirname, './src'),
-      'components': path.resolve(__dirname, './src/components')
+      'components': path.resolve(__dirname, './src/components'),
+      'app': path.resolve(__dirname, './src/app'),
+      'pages': path.resolve(__dirname, './src/pages'),
+      'widgets': path.resolve(__dirname, './src/widgets'),
+      'features': path.resolve(__dirname, './src/features'),
+      'shared': path.resolve(__dirname, './src/shared'),
+      'entities': path.resolve(__dirname, './src/entities'),
     }
   },
   build: {
