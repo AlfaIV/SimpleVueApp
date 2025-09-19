@@ -1,29 +1,31 @@
-import { defineConfig } from 'vite'
+/// <reference types="vitest/config" />
+import { defineConfig } from 'vite';
 import path from 'path';
 import dotenv from 'dotenv';
+import vue from '@vitejs/plugin-vue';
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
+import Components from 'unplugin-vue-components/vite';
+import AutoImport from 'unplugin-auto-import/vite';
+import { fileURLToPath } from 'node:url';
+import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
+const dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url));
 
-import vue from '@vitejs/plugin-vue'
-import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
-import Components from 'unplugin-vue-components/vite'
-import AutoImport from 'unplugin-auto-import/vite'
-
+// More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 dotenv.config();
 const apiUrl = process.env.VITE_API_URL;
-
-
 export default defineConfig({
   base: '/',
-  server:{
+  server: {
     open: true,
     host: '0.0.0.0',
     port: 8080,
     proxy: {
-        '/api': {target: apiUrl || "https://hacker-news.firebaseio.com/v0",
-        ws:true,
+      '/api': {
+        target: apiUrl || "https://hacker-news.firebaseio.com/v0",
+        ws: true,
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
-      },
-      
+        rewrite: path => path.replace(/^\/api/, '')
+      }
     }
   },
   resolve: {
@@ -35,7 +37,7 @@ export default defineConfig({
       'widgets': path.resolve(__dirname, './src/widgets'),
       'features': path.resolve(__dirname, './src/features'),
       'shared': path.resolve(__dirname, './src/shared'),
-      'entities': path.resolve(__dirname, './src/entities'),
+      'entities': path.resolve(__dirname, './src/entities')
     }
   },
   build: {
@@ -44,20 +46,39 @@ export default defineConfig({
       output: {
         entryFileNames: '[name].[hash].min.js',
         chunkFileNames: '[name].[hash].min.js',
-        assetFileNames: '[name].[hash].[ext]',
-      },
+        assetFileNames: '[name].[hash].[ext]'
+      }
     },
     emptyOutDir: true,
     minify: true,
-    assetsDir: '.',
+    assetsDir: '.'
   },
-  plugins: [
-    vue(),
-    AutoImport({
-      resolvers: [ElementPlusResolver()],
-    }),
-    Components({
-      resolvers: [ElementPlusResolver()],
-    }),
-  ],
-})
+  plugins: [vue(), AutoImport({
+    resolvers: [ElementPlusResolver()]
+  }), Components({
+    resolvers: [ElementPlusResolver()]
+  })],
+  test: {
+    projects: [{
+      extends: true,
+      plugins: [
+      // The plugin will run tests for the stories defined in your Storybook config
+      // See options at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon#storybooktest
+      storybookTest({
+        configDir: path.join(dirname, '.storybook')
+      })],
+      test: {
+        name: 'storybook',
+        browser: {
+          enabled: true,
+          headless: true,
+          provider: 'playwright',
+          instances: [{
+            browser: 'chromium'
+          }]
+        },
+        setupFiles: ['.storybook/vitest.setup.ts']
+      }
+    }]
+  }
+});
