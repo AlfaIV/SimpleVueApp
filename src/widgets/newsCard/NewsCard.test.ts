@@ -27,7 +27,7 @@ describe('widget - NewsCard', () => {
     expect(screen.getByText("дата публикации: 2023-10-25")).toBe;
   })
   it("Переходит на страницу новости при клике", async () => {
-    const utils = render(NewsCard, {
+    render(NewsCard, {
       props: {
         id: 1,
         header: "Заголовок новости",
@@ -42,5 +42,18 @@ describe('widget - NewsCard', () => {
     expect(useRouter().push).toHaveBeenCalled;
     expect(useRouter().push).toHaveBeenCalledOnce;
     expect(useRouter().push).toHaveBeenCalledWith('/news/1');
+  });
+  it("Соответствует существующему snapshot'у", () => {
+    render(NewsCard, {
+      props: {
+        id: 1,
+        header: "Пример заголовка",
+        rating: 5,
+        author: "Иван Иванов",
+        date: "2023-10-25",
+      },
+    });
+
+    expect(screen).toMatchSnapshot();
   });
 })
