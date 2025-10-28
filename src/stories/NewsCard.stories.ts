@@ -5,7 +5,6 @@ import NewsCard from '../widgets/newsCard/NewsCard.vue';
 const meta = {
   title: 'Widgets/NewsCard',
   component: NewsCard,
-  // This component will have an automatically generated docsPage entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ['autodocs'],
   argTypes: {
     id: { control: { type: 'number', min:0} },
