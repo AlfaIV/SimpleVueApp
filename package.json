@@ -12,7 +12,8 @@
     "test": "vitest",
     "test:run": "vitest run",
     "test:ui": "vitest --ui",
-    "test:coverage": "vitest --coverage"
+    "test:coverage": "vitest --coverage",
+    "cypress:run": "npx cypress run"
   },
   "dependencies": {
     "axios": "^1.9.0",
@@ -39,6 +40,7 @@
     "@vitest/coverage-v8": "^3.2.4",
     "@vitest/ui": "^3.2.4",
     "@vue/tsconfig": "^0.7.0",
+    "cypress": "^15.5.0",
     "jsdom": "^27.0.1",
     "playwright": "^1.56.1",
     "storybook": "^9.1.7",
