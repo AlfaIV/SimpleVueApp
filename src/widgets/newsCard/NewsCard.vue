@@ -11,7 +11,7 @@ const router = useRouter()
 </script>
 
 <template>
-  <el-card style="max-width: 400px" @click="router.push(`/news/${id}`)">
+  <el-card data-test-id="NewsCard" style="max-width: 400px" @click="router.push(`/news/${id}`)">
     <template #header>
       <p>{{ header }}</p>
     </template>
